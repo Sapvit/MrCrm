@@ -28,5 +28,22 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 }
 echo "</table>";
 ?>
+
+<!-- Форма добавления -->
+<form method="POST">
+    Имя: <input name="name">
+    Email: <input name="email" type="email">
+    <button>Добавить</button>
+</form>
+
+<?php
+// Обработка POST
+if ($_POST['name']) {
+    $stmt = $db->prepare("INSERT INTO users (name, email) VALUES (?, ?)");
+    $stmt->execute([$_POST['name'], $_POST['email']]);
+    echo "<p>Добавлено!</p>";
+}
+?>
+
 </body>
 </html>
