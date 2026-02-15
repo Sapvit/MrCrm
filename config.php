@@ -3,6 +3,11 @@
  * Конфигурация приложения
  */
 
+// Запустить сессию
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 // Подключение БД (замените данные)
 // Пример:
 // $pdo = new PDO('mysql:host=localhost;dbname=your_db;charset=utf8', 'user', 'pass');

@@ -56,6 +56,11 @@
     to { opacity: 1; }
 }
 
+/* Home button - стили для ссылки */
+.home-btn-top {
+    text-decoration: none;
+}
+
 .toggle-btn-top:hover {
     background: var(--color-bg-hover-strong);
     color: var(--color-text-primary);
@@ -803,4 +808,87 @@ form {
 
 .flatpickr-innerContainer {
     display: contents;
+}
+/* ========================================== */
+/* Project Home View Styles                  */
+/* ========================================== */
+
+.home-container {
+    position: relative;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Emoji decoration - positioned behind the title */
+.project-emoji-decoration {
+    position: absolute;
+    top: -40px;
+    right: 20px;
+    font-size: 120px;
+    line-height: 1;
+    opacity: 0.15;
+    pointer-events: auto;
+    cursor: pointer;
+    transition: all 0.3s;
+    z-index: 100;
+}
+
+.project-emoji-decoration:hover {
+    opacity: 0.25;
+    transform: scale(1.05);
+}
+
+.project-emoji-decoration span {
+    display: block;
+    font-size: 120px;
+    line-height: 1;
+}
+
+/* Welcome header section */
+.welcome-header {
+    position: relative;
+    margin-top: 40px;
+    margin-bottom: 2rem;
+}
+
+.welcome-header h1 {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin: 0 0 12px 0;
+    line-height: 1.2;
+}
+
+.welcome-header p {
+    font-size: 16px;
+    color: var(--color-text-secondary);
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* Editable project name */
+.editable-project-name {
+    color: var(--color-text-primary);
+    border-bottom: 2px solid #e5e7eb;
+    padding: 0 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+    border-radius: 2px;
+    outline: none;
+}
+
+.editable-project-name:hover:not([contenteditable="true"]) {
+    border-bottom-color: var(--color-text-primary);
+    background: rgba(0, 0, 0, 0.02);
+}
+
+.editable-project-name[contenteditable="true"] {
+    border-bottom: 2px solid #10b981;
+    background: #f0fdf4;
+    padding: 4px 8px;
+}
+
+.editable-project-name[contenteditable="true"]:focus {
+    outline: none;
+    border-bottom-color: #059669;
 }

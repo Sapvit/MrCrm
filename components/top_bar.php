@@ -14,7 +14,15 @@ $currentView = getCurrentView();
     </div>
     
     <div class="top-section center-top">
-        <?php if ($currentView === 'note'): ?>
+        <?php if ($currentView === 'project_home'): ?>
+            <!-- Кнопка home для view главной страницы проекта -->
+            <div class="center-left-group">
+                <a href="/home.php" class="toolbar-btn home-btn" data-tooltip="Back to projects">
+                    <i class="bi bi-house"></i>
+                </a>
+            </div>
+            <div style="flex: 1;"></div>
+        <?php elseif ($currentView === 'note'): ?>
             <!-- Инструменты редактора для note view -->
             <div class="center-left-group">
                 <button class="toolbar-btn back-btn" data-tooltip="Back to project">

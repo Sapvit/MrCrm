@@ -16,6 +16,39 @@
 
 require_once __DIR__ . '/config.php';
 
+// Обработка AJAX запросов
+if (isset($_GET['ajax'])) {
+    header('Content-Type: application/json');
+    
+    if ($_GET['ajax'] === 'save_project' && $_SERVER['REQUEST_METHOD'] === 'POST') {
+        // Получить JSON данные из body
+        $json = file_get_contents('php://input');
+        $data = json_decode($json, true);
+        
+        if ($data && isset($data['project_id'])) {
+            $projectId = (int)$data['project_id'];
+            $projectName = sanitizeHtml($data['project_name'] ?? 'Project');
+            $projectEmoji = substr($data['project_emoji'] ?? '📋', 0, 2); // Берём первые 2 символа (emoji часто составляет 2 символа UTF-8)
+            
+            // Сохраняем в сессию
+            $_SESSION['project_' . $projectId . '_name'] = $projectName;
+            $_SESSION['project_' . $projectId . '_emoji'] = $projectEmoji;
+            
+            echo json_encode([
+                'success' => true,
+                'message' => 'Project updated successfully',
+                'project_id' => $projectId,
+                'project_name' => $projectName,
+                'project_emoji' => $projectEmoji
+            ]);
+        } else {
+            http_response_code(400);
+            echo json_encode(['success' => false, 'error' => 'Invalid data']);
+        }
+        exit;
+    }
+}
+
 $currentView = getCurrentView();
 ?>
 <!DOCTYPE html>
@@ -32,6 +65,7 @@ $currentView = getCurrentView();
     <link rel="stylesheet" href="assets/css/main.css">
     <link rel="stylesheet" href="assets/css/layout.css">
     <link rel="stylesheet" href="assets/css/components.css">
+    <link rel="stylesheet" href="assets/css/home.css">
 </head>
 <body>
     <!-- Верхняя панель с инструментами (меняется для каждой view) -->

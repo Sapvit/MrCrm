@@ -101,6 +101,183 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
     
+    // ========== Project Home View ==========
+    // Обработка редактирования названия и emoji проекта
+    const projectNameDisplay = document.getElementById('projectNameDisplay');
+    const projectEmojiDisplay = document.getElementById('projectEmojiDisplay');
+    const projectEmojiPickerModal = document.getElementById('projectEmojiPickerModal');
+    const projectEmojiPickerGrid = document.getElementById('projectEmojiPickerGrid');
+    const projectEmojiPickerClose = document.getElementById('projectEmojiPickerClose');
+    const projectEmojiCustomInput = document.getElementById('projectEmojiCustomInput');
+    const projectEmojiCustomConfirm = document.getElementById('projectEmojiCustomConfirm');
+    
+    if (projectNameDisplay) {
+        const projectId = document.getElementById('projectId').value;
+        const popularEmojis = ['📁', '📋', '🚀', '💡', '📚', '💼', '🎨', '📱', '⚙️', '🎯', '📊', '🎬', '🎮', '🎪', '🎭', '💎', '🌟', '📢', '📈', '🔧', '🎁', '✅', '⭐', '🎵', '🎯', '👥', '🏆', '🔐', '🌈', '🚀'];
+        
+        let isEditingName = false;
+        let originalName = projectNameDisplay.textContent;
+        
+        // Инициализация emoji picker
+        function initializeProjectEmojiPicker() {
+            if (!projectEmojiPickerGrid) return;
+            projectEmojiPickerGrid.innerHTML = '';
+            popularEmojis.forEach(emoji => {
+                const button = document.createElement('button');
+                button.className = 'emoji-picker-item';
+                button.textContent = emoji;
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    selectProjectEmoji(emoji);
+                });
+                projectEmojiPickerGrid.appendChild(button);
+            });
+        }
+        
+        // Выбор emoji
+        function selectProjectEmoji(emoji) {
+            projectEmojiDisplay.innerHTML = '<span>' + emoji + '</span>';
+            const projectEmoji = document.getElementById('currentProjectEmoji');
+            if (projectEmoji) projectEmoji.value = emoji;
+            closeProjectEmojiPicker();
+            saveProjectData();
+        }
+        
+        // Открыть emoji picker
+        function openProjectEmojiPicker() {
+            if (projectEmojiPickerModal) {
+                projectEmojiPickerModal.classList.add('active');
+            }
+            if (projectEmojiCustomInput) {
+                setTimeout(() => projectEmojiCustomInput.focus(), 100);
+            }
+        }
+        
+        // Закрыть emoji picker
+        function closeProjectEmojiPicker() {
+            projectEmojiPickerModal.classList.remove('active');
+            if (projectEmojiCustomInput) projectEmojiCustomInput.value = '';
+        }
+        
+        // Сохранение данных проекта
+        function saveProjectData() {
+            const name = projectNameDisplay.textContent;
+            const emoji = document.getElementById('currentProjectEmoji').value;
+            
+            // Сохраняем через AJAX или обновляем сессию
+            fetch('?ajax=save_project', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    project_id: projectId,
+                    project_name: name,
+                    project_emoji: emoji
+                })
+            }).catch(() => {
+                // Если есть ошибка, хотя бы обновляем локально
+                console.log('Project data:', { name, emoji });
+            });
+        }
+        
+        // Клик на emoji для открытия picker
+        if (projectEmojiDisplay) {
+            projectEmojiDisplay.addEventListener('click', function(e) {
+                e.stopPropagation();
+                e.preventDefault();
+                openProjectEmojiPicker();
+            });
+        }
+        
+        // Закрытие picker
+        if (projectEmojiPickerClose) {
+            projectEmojiPickerClose.addEventListener('click', closeProjectEmojiPicker);
+        }
+        
+        // Обработка пользовательского emoji
+        if (projectEmojiCustomInput) {
+            projectEmojiCustomInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter' && this.value.trim()) {
+                    const emoji = this.value.trim().substring(0, 2);
+                    selectProjectEmoji(emoji);
+                }
+            });
+        }
+        
+        if (projectEmojiCustomConfirm) {
+            projectEmojiCustomConfirm.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                if (projectEmojiCustomInput.value.trim()) {
+                    const emoji = projectEmojiCustomInput.value.trim().substring(0, 2);
+                    selectProjectEmoji(emoji);
+                }
+            });
+        }
+        
+        // Закрытие picker при клике вне него
+        document.addEventListener('click', function(e) {
+            if (projectEmojiPickerModal.classList.contains('active') && 
+                !projectEmojiPickerModal.contains(e.target) && 
+                !projectEmojiDisplay.contains(e.target)) {
+                closeProjectEmojiPicker();
+            }
+        });
+        
+        // Inline редактирование названия
+        projectNameDisplay.addEventListener('click', function(e) {
+            if (!isEditingName) {
+                e.stopPropagation();
+                isEditingName = true;
+                this.contentEditable = 'true';
+                this.focus();
+                
+                // Выделяем весь текст
+                const range = document.createRange();
+                range.selectNodeContents(this);
+                const sel = window.getSelection();
+                sel.removeAllRanges();
+                sel.addRange(range);
+            }
+        });
+        
+        // Сохранение при Enter
+        projectNameDisplay.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                this.blur();
+            }
+        });
+        
+        // Отмена при Escape
+        projectNameDisplay.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                e.preventDefault();
+                this.textContent = originalName;
+                this.blur();
+            }
+        });
+        
+        // Завершение редактирования
+        projectNameDisplay.addEventListener('blur', function() {
+            isEditingName = false;
+            this.contentEditable = 'false';
+            const newName = this.textContent.trim();
+            if (newName && newName !== originalName) {
+                originalName = newName;
+                document.getElementById('currentProjectName').value = newName;
+                saveProjectData();
+            } else if (!newName) {
+                this.textContent = originalName;
+            }
+        });
+        
+        // Инициализация
+        initializeProjectEmojiPicker();
+    }
+    
     // Скрыть контент перед выгрузкой страницы (не всегда работает, но помогает)
     window.addEventListener('beforeunload', () => {
         const container = document.querySelector('.app-container');

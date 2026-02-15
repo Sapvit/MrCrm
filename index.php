@@ -1,8 +1,8 @@
-<html>
-        <head>
-                <title> PHP Test </title>
-        </head>
-        <body>
-                <?php echo '<p>hello world</p>'; ?>
-        </body>
-</html>
+<?php
+/**
+ * Index - точка входа приложения
+ * Перенаправляет на главную страницу со списком проектов
+ */
+
+header('Location: home.php');
+exit;
