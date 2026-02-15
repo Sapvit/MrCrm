@@ -191,6 +191,12 @@ html, body {
     background: rgba(0, 0, 0, 0.08);
 }
 
+.toolbar-btn.active {
+    background: rgba(0, 0, 0, 0.1);
+    color: #1f2937;
+    font-weight: 600;
+}
+
 .toolbar-btn i {
     flex-shrink: 0;
 }
@@ -419,7 +425,7 @@ form {
     flex-direction: column;
 }
 
-#note-textarea {
+.note-editor {
     flex: 1;
     width: 100%;
     height: 100%;
@@ -428,39 +434,75 @@ form {
     font-size: 16px;
     line-height: 1.8;
     border: none;
-    resize: none;
+    outline: none;
     overflow-y: auto;
     overflow-x: hidden;
     background: transparent;
     font-family: inherit;
     color: #374151;
     transition: color 0.2s ease;
+    word-wrap: break-word;
+    white-space: pre-wrap;
 }
 
-#note-textarea::-webkit-scrollbar {
+.note-editor::-webkit-scrollbar {
     width: 6px;
 }
 
-#note-textarea::-webkit-scrollbar-track {
+.note-editor::-webkit-scrollbar-track {
     background: transparent;
 }
 
-#note-textarea::-webkit-scrollbar-thumb {
+.note-editor::-webkit-scrollbar-thumb {
     background: rgba(0, 0, 0, 0.05);
     border-radius: 3px;
 }
 
-#note-textarea::-webkit-scrollbar-thumb:hover {
+.note-editor::-webkit-scrollbar-thumb:hover {
     background: rgba(0, 0, 0, 0.1);
 }
 
-#note-textarea::placeholder {
+.note-editor:empty::before {
+    content: attr(data-placeholder);
     color: #d1d5db;
+    pointer-events: none;
 }
 
-#note-textarea:focus {
+.note-editor:focus {
     outline: none;
     color: #1f2937;
+}
+
+/* Стили для форматированного текста */
+.note-editor b,
+.note-editor strong {
+    font-weight: 600;
+}
+
+.note-editor i,
+.note-editor em {
+    font-style: italic;
+}
+
+.note-editor u {
+    text-decoration: underline;
+}
+
+.note-editor h1 {
+    font-size: 32px;
+    font-weight: 700;
+    margin: 16px 0 8px 0;
+    line-height: 1.4;
+}
+
+.note-editor ul,
+.note-editor ol {
+    margin: 8px 0 8px 24px;
+    padding: 0;
+}
+
+.note-editor li {
+    margin-bottom: 4px;
 }
 
 button[type="submit"] {

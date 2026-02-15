@@ -1,0 +1,805 @@
+/* Кнопки верхней панели */
+.toggle-btn-top {
+    width: 36px;
+    height: 36px;
+    border: none;
+    background: transparent;
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    color: var(--color-text-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition-fast);
+    font-size: 20px;
+    position: relative;
+}
+
+.left-top .toggle-btn-top:hover::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    left: calc(100% + 10px);
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--color-shadow-dark);
+    color: white;
+    padding: 6px 10px;
+    border-radius: var(--radius-sm);
+    font-size: 11px;
+    font-weight: 500;
+    white-space: nowrap;
+    z-index: 1000;
+    pointer-events: none;
+    animation: tooltipFadeIn 0.2s 0.5s both;
+}
+
+.right-top .toggle-btn-top:hover::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    right: calc(100% + 10px);
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--color-shadow-dark);
+    color: white;
+    padding: 6px 10px;
+    border-radius: var(--radius-sm);
+    font-size: 11px;
+    font-weight: 500;
+    white-space: nowrap;
+    z-index: 1000;
+    pointer-events: none;
+    animation: tooltipFadeIn 0.2s 0.5s both;
+}
+
+@keyframes tooltipFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.toggle-btn-top:hover {
+    background: var(--color-bg-hover-strong);
+    color: var(--color-text-primary);
+}
+
+.toggle-btn-top:active {
+    background: var(--color-bg-active);
+}
+
+/* Toolbar кнопки */
+.toolbar-btn {
+    min-width: 32px;
+    height: 32px;
+    padding: 0 8px;
+    border: none;
+    background: transparent;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    color: var(--color-text-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    font-size: 16px;
+    font-weight: 500;
+    transition: var(--transition-fast);
+    position: relative;
+}
+
+.toolbar-btn:hover::before {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: -32px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--color-shadow-dark);
+    color: white;
+    padding: 6px 10px;
+    border-radius: var(--radius-sm);
+    font-size: 11px;
+    font-weight: 500;
+    white-space: nowrap;
+    z-index: 1000;
+    pointer-events: none;
+    animation: tooltipFadeIn 0.2s 0.5s both;
+}
+
+.toolbar-btn:hover {
+    background: var(--color-bg-hover-strong);
+    color: var(--color-text-primary);
+}
+
+.toolbar-btn:active {
+    background: var(--color-bg-active);
+}
+
+.toolbar-btn.active {
+    background: var(--color-bg-active-strong);
+    color: var(--color-text-primary);
+    font-weight: 600;
+}
+
+.toolbar-btn i {
+    flex-shrink: 0;
+}
+
+.toolbar-divider {
+    width: 1px;
+    height: 20px;
+    background: rgba(0, 0, 0, 0.1);
+    margin: 0 4px;
+}
+
+.back-btn {
+    margin-right: auto;
+}
+
+/* Add кнопки в sidebar */
+.section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.section-header h3,
+.section-header h4 {
+    margin-bottom: 0;
+}
+
+.add-btn {
+    width: 28px;
+    height: 28px;
+    border: none;
+    background: transparent;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    color: var(--color-text-tertiary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: var(--transition-fast);
+    font-size: 18px;
+    position: relative;
+}
+
+.add-btn:hover::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: -32px;
+    right: 0;
+    background: var(--color-shadow-dark);
+    color: white;
+    padding: 6px 10px;
+    border-radius: var(--radius-sm);
+    font-size: 11px;
+    font-weight: 500;
+    white-space: nowrap;
+    z-index: 1000;
+    pointer-events: none;
+    animation: tooltipFadeIn 0.2s 0.5s both;
+}
+
+.add-btn:hover {
+    background: var(--color-bg-hover-strong);
+    color: var(--color-text-secondary);
+}
+
+.add-btn:active {
+    background: var(--color-bg-active);
+}
+
+/* Action buttons для home view */
+.action-btn {
+    padding: 12px 24px;
+    border: none;
+    background: #2563eb;
+    color: white;
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: var(--transition-fast);
+}
+
+.action-btn:hover {
+    background: #1d4ed8;
+}
+
+.action-btn:active {
+    background: #1e40af;
+}
+
+/* Note editor */
+form {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.note-editor {
+    flex: 1;
+    width: 100%;
+    height: 100%;
+    min-height: 200px;
+    padding: 0;
+    font-size: 16px;
+    line-height: 1.8;
+    border: none;
+    outline: none;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background: transparent;
+    font-family: inherit;
+    color: var(--color-text-primary);
+    transition: var(--transition-normal);
+    word-wrap: break-word;
+    white-space: pre-wrap;
+}
+
+.note-editor::-webkit-scrollbar {
+    width: 6px;
+}
+
+.note-editor::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.note-editor::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 3px;
+}
+
+.note-editor::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.note-editor:empty::before {
+    content: attr(data-placeholder);
+    color: #d1d5db;
+    pointer-events: none;
+}
+
+.note-editor:focus {
+    outline: none;
+    color: #1f2937;
+}
+
+/* Formatting styles */
+.note-editor b,
+.note-editor strong {
+    font-weight: 600;
+}
+
+.note-editor i,
+.note-editor em {
+    font-style: italic;
+}
+
+.note-editor u {
+    text-decoration: underline;
+}
+
+.note-editor h1 {
+    font-size: 32px;
+    font-weight: 700;
+    margin: 16px 0 8px 0;
+    line-height: 1.4;
+}
+
+.note-editor ul,
+.note-editor ol {
+    margin: 8px 0 8px 24px;
+    padding: 0;
+}
+
+.note-editor li {
+    margin-bottom: 4px;
+}
+
+/* ============================================
+   REMINDERS STYLES
+   ============================================ */
+
+.reminders-list {
+    list-style: none;
+}
+
+.reminder-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 8px;
+    margin-bottom: 4px;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: var(--transition-fast);
+    background: transparent;
+}
+
+.reminder-item:hover {
+    background: var(--color-bg-hover);
+}
+
+.reminder-item.completed {
+    opacity: 0.6;
+}
+
+.reminder-item.completed .reminder-title {
+    text-decoration: line-through;
+    color: var(--color-text-tertiary);
+}
+
+.reminder-checkbox {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    border: none;
+    background: transparent;
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: var(--transition-fast);
+    padding: 0;
+    font-size: 16px;
+}
+
+.reminder-checkbox:hover {
+    color: var(--color-text-primary);
+    background: var(--color-bg-hover-strong);
+}
+
+.reminder-content {
+    flex: 1;
+    min-width: 0;
+    cursor: pointer;
+}
+
+.reminder-title {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.reminder-datetime {
+    font-size: 11px;
+    color: var(--color-text-tertiary);
+    margin-top: 2px;
+}
+
+/* ============================================
+   REMINDER MODAL
+   ============================================ */
+
+.reminder-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2000;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+    padding-top: 52px;
+    pointer-events: none;
+}
+
+.reminder-modal[style*="display: none"] {
+    display: none !important;
+}
+
+.reminder-modal-content {
+    position: relative;
+    background: white;
+    border-radius: var(--radius-lg);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.12);
+    width: 100%;
+    max-width: 340px;
+    margin-right: 20px;
+    margin-top: 20px;
+    max-height: 85vh;
+    overflow-y: auto;
+    z-index: 2001;
+    pointer-events: all;
+    animation: modalSlideIn 0.3s ease-out;
+}
+
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Form styles */
+#reminder-form {
+    padding: 16px;
+}
+
+.form-group {
+    margin-bottom: 16px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--color-text-secondary);
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.form-group input[type="text"],
+.form-group input[type="time"],
+.form-group textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    font-family: inherit;
+    font-size: 14px;
+    color: var(--color-text-primary);
+    background: white;
+    transition: var(--transition-fast);
+}
+
+.form-group input[type="text"]:focus,
+.form-group input[type="time"]:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+/* Упрощённые стили для reminder модального окна */
+.reminder-title-input,
+.reminder-note-input {
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+.reminder-title-input {
+    font-size: 15px;
+    font-weight: 600;
+    padding: 8px 0;
+}
+
+.reminder-title-input::placeholder {
+    color: #d1d5db;
+}
+
+.reminder-title-input:focus {
+    outline: none;
+}
+
+.reminder-note-input {
+    font-size: 13px;
+    padding: 8px 0;
+    resize: none;
+    min-height: 60px;
+}
+
+.reminder-note-input::placeholder {
+    color: #d1d5db;
+}
+
+.reminder-note-input:focus {
+    outline: none;
+}
+
+/* Календарь (Flatpickr inline) */
+.reminder-date-picker {
+    margin: 16px 0;
+}
+
+/* Inline форма для времени и all-day */
+.form-control-inline {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    margin-top: 16px;
+}
+
+.form-control-inline input[type="time"] {
+    flex: 1;
+    padding: 8px 10px;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    font-family: inherit;
+    font-size: 14px;
+}
+
+.form-control-inline input[type="time"].time-past {
+    color: #dc2626;
+}
+
+.form-control-inline input[type="time"].time-past::placeholder {
+    color: #fca5a5;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--color-text-primary);
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.checkbox-label input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    accent-color: #2563eb;
+}
+
+/* Form actions */
+.form-actions {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 8px;
+    margin-top: 20px;
+}
+
+.btn {
+    padding: 10px 16px;
+    border: none;
+    border-radius: var(--radius-md);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition-fast);
+    flex: 1;
+}
+
+.btn-primary {
+    background: #2563eb;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #1d4ed8;
+}
+
+.btn-primary:active {
+    background: #1e40af;
+}
+
+.btn-secondary {
+    background: var(--color-bg-hover-strong);
+    color: var(--color-text-primary);
+    border: 1px solid var(--color-border);
+}
+
+.btn-secondary:hover {
+    background: var(--color-bg-active);
+}
+
+.btn-delete-outline {
+    width: 100%;
+    padding: 10px 16px;
+    border: 1.5px solid #dc2626;
+    background: white;
+    color: #dc2626;
+    border-radius: var(--radius-md);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition-fast);
+    background: #dc2626;
+    color: white;
+}
+
+.btn-delete-outline:hover {
+    background: #dc2626;
+    border-color: #dc2626;
+    color: white;
+}
+
+.btn-delete-outline:active {
+    background: #b91c1c;
+    border-color: #b91c1c;
+    color: white;
+}
+
+/* Close button for modal */
+.reminder-modal-close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: transparent;
+    color: var(--color-text-secondary);
+    font-size: 24px;
+    cursor: pointer;
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition-fast);
+    z-index: 10;
+}
+
+.reminder-modal-close:hover {
+    background: var(--color-bg-hover-strong);
+    color: var(--color-text-primary);
+}
+
+.reminder-modal-close:active {
+    background: var(--color-bg-active);
+}
+
+/* Flatpickr overrides */
+.flatpickr-calendar {
+    box-shadow: none;
+    border: none;
+    background-color: transparent;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+.flatpickr-calendar.open {
+    display: inline-block !important;
+}
+
+.flatpickr-month {
+    background: transparent;
+    color: var(--color-text-primary);
+    padding: 8px 0;
+    margin-bottom: 8px;
+    border: none;
+    height: auto;
+}
+
+.flatpickr-current-month {
+    font-size: 13px;
+    font-weight: 600;
+    text-align: center;
+    padding: 8px 0;
+    color: var(--color-text-primary);
+    cursor: pointer;
+    transition: var(--transition-fast);
+    flex: 1;
+}
+
+.flatpickr-current-month:hover {
+    color: #2563eb;
+}
+
+/* Скрыть год в календаре */
+.flatpickr-current-month .numInputWrapper,
+.flatpickr-current-month .cur-year {
+    display: none !important;
+}
+
+/* Скрыть dropdown месяцев (на всякий случай) */
+.flatpickr-monthDropdown-months {
+    pointer-events: none;
+}
+
+.flatpickr-prev-month,
+.flatpickr-next-month {
+    color: #2563eb;
+    height: 28px;
+    width: 28px;
+    line-height: 28px;
+    padding: 0;
+    border-radius: var(--radius-md);
+    transition: var(--transition-fast);
+    font-size: 16px;
+}
+
+.flatpickr-prev-month:hover,
+.flatpickr-next-month:hover {
+    background-color: var(--color-bg-hover-strong);
+    color: #1d4ed8;
+}
+
+.flatpickr-navhead {
+    padding: 8px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+}
+
+.flatpickr-weekdays {
+    background: transparent;
+    padding: 8px 0 4px 0;
+}
+
+.flatpickr-weekday {
+    color: var(--color-text-secondary);
+    font-size: 12px;
+    font-weight: 600;
+    width: 14.2857%;
+    line-height: 24px;
+    height: 24px;
+}
+
+.flatpickr-days {
+    padding: 0;
+    width: 100%;
+}
+
+.flatpickr-day {
+    width: 14.2857%;
+    height: 32px;
+    line-height: 32px;
+    color: var(--color-text-primary);
+    background: transparent;
+    border: none;
+    border-radius: var(--radius-md);
+    font-size: 13px;
+    transition: var(--transition-fast);
+    margin-bottom: 4px;
+}
+
+.flatpickr-day:hover,
+.flatpickr-day:focus {
+    background-color: var(--color-bg-hover-strong);
+    border-color: transparent;
+}
+
+.flatpickr-day.selected,
+.flatpickr-day.startRange,
+.flatpickr-day.endRange {
+    background-color: #2563eb;
+    border-color: #2563eb;
+    color: white;
+}
+
+.flatpickr-day.selected:hover,
+.flatpickr-day.startRange:hover,
+.flatpickr-day.endRange:hover {
+    background-color: #1d4ed8;
+}
+
+.flatpickr-day.today {
+    border-color: #2563eb;
+    background-color: transparent;
+    color: #2563eb;
+    font-weight: 600;
+}
+
+.flatpickr-day.today:hover {
+    background-color: rgba(37, 99, 235, 0.1);
+    border-color: #2563eb;
+}
+
+.flatpickr-day.disabled,
+.flatpickr-day.prevMonthDay,
+.flatpickr-day.nextMonthDay {
+    color: #d1d5db;
+    background: transparent;
+}
+
+.flatpickr-innerContainer {
+    display: contents;
+}

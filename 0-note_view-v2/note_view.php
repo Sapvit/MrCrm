@@ -7,11 +7,32 @@
 //     die('DB error: ' . $e->getMessage());
 // }
 
+/**
+ * Очистить HTML от опасного кода, оставляя только безопасные теги форматирования
+ */
+function sanitizeHtml($html) {
+    // Разрешённые теги: для текстового форматирования
+    $allowed = '<b><strong><i><em><u><br><p><h1><ul><ol><li>';
+    
+    // Убираем всё, кроме разрешённых тегов
+    $clean = strip_tags($html, $allowed);
+    
+    // Дополнительная защита: кодируем атрибуты
+    $clean = preg_replace('/<([^>]+)on[a-z]+\s*=\s*["\'][^"\']*/', '<$1', $clean);
+    
+    return trim($clean);
+}
+
 $noteContent = '';
 $noteId = $_GET['id'] ?? null;
 
 if ($_POST && isset($_POST['save'])) {
-    $content = trim($_POST['note_content']);
+    $content = sanitizeHtml($_POST['note_content']);
+    
+    if (empty($content)) {
+        $content = '';
+    }
+    
     if ($noteId) {
         $stmt = $pdo->prepare("UPDATE notes SET content = ? WHERE id = ?");
         $stmt->execute([$content, $noteId]);
@@ -114,11 +135,14 @@ if ($noteId) {
         <!-- Центральная заметка -->
         <div class="main-content">
             <form method="POST" action="">
-                <textarea 
-                    name="note_content" 
-                    id="note-textarea"
-                    placeholder="Start writing..."
-                ><?php echo htmlspecialchars($noteContent); ?></textarea>
+                <div 
+                    id="note-editor" 
+                    contenteditable="true" 
+                    class="note-editor"
+                    data-placeholder="Start writing..."
+                ><?php echo $noteContent; ?></div>
+                <input type="hidden" name="note_content" id="note-content-input">
+                <input type="hidden" name="save" value="1">
             </form>
         </div>
         
