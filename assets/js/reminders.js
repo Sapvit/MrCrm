@@ -32,7 +32,15 @@ document.addEventListener('DOMContentLoaded', () => {
             note: document.querySelector('#reminder_note').value
         };
         
-        return JSON.stringify(originalFormData) !== JSON.stringify(currentData);
+        // Сравниваем каждое поле по отдельности для точности
+        const changed = 
+            originalFormData.title !== currentData.title ||
+            originalFormData.date !== currentData.date ||
+            originalFormData.time !== currentData.time ||
+            originalFormData.allDay !== currentData.allDay ||
+            originalFormData.note !== currentData.note;
+        
+        return changed;
     };
     
     // Сохранить reminder
@@ -47,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
         //     body: JSON.stringify(Object.fromEntries(formData))
         // })
         
-        console.log('Reminder saved:', Object.fromEntries(formData));
+        // console.log('Reminder saved:', Object.fromEntries(formData));
         closeModal();
     };
     
@@ -66,30 +74,35 @@ document.addEventListener('DOMContentLoaded', () => {
         // Очищаем форму
         reminderForm.reset();
         
+        let dateString;
         let dateToSet;
         
         if (reminderId) {
             // Редактирование существующего reminder
             document.querySelector('#reminder_id').value = reminderId;
-            const dateString = loadReminderData(reminderId); // Получаем дату из данных
-            dateToSet = dateString ? new Date(dateString) : new Date();
+            dateString = loadReminderData(reminderId); // Получаем дату из данных (в формате Y-m-d)
+            // Парсим дату локально, чтобы избежать проблем с timezone
+            const [year, month, day] = dateString.split('-').map(Number);
+            dateToSet = new Date(year, month - 1, day); // месяцы в JS начинаются с 0
         } else {
             // Создание нового reminder
             document.querySelector('#reminder_id').value = '';
             // Устанавливаем дефолтную дату (сегодня)
             dateToSet = new Date();
+            dateString = dateToSet.toISOString().split('T')[0];
+            document.querySelector('#reminder_date').value = dateString;
             document.querySelector('#reminder_time').value = '10:00';
             document.querySelector('#reminder_all_day').checked = false;
             updateTimeVisibility();
-            
-            const dateString = dateToSet.toISOString().split('T')[0];
-            document.querySelector('#reminder_date').value = dateString;
         }
         
         modal.style.display = 'flex';
         
         // Проверяем дату, обновляем календарь и сохраняем оригинальное состояние
         setTimeout(() => {
+            // Для существующего reminder дата уже установлена в loadReminderData
+            // Для нового - установили выше
+            
             // Обновляем Flatpickr календарь на выбранную дату
             const datePicker = document.querySelector('#reminder-date-picker');
             if (datePicker && datePicker._flatpickr) {
@@ -331,7 +344,12 @@ function initializeDatePicker() {
                 onChange: (selectedDates) => {
                     // Обновляем скрытое поле даты
                     if (selectedDates.length > 0) {
-                        const dateString = selectedDates[0].toISOString().split('T')[0];
+                        // Извлекаем дату локально, без конвертации в UTC (избегаем timezone багов)
+                        const date = selectedDates[0];
+                        const year = date.getFullYear();
+                        const month = String(date.getMonth() + 1).padStart(2, '0');
+                        const day = String(date.getDate()).padStart(2, '0');
+                        const dateString = `${year}-${month}-${day}`;
                         document.querySelector('#reminder_date').value = dateString;
                         checkIfPastDate();
                     }

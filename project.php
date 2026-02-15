@@ -47,8 +47,8 @@ $currentView = getCurrentView();
             if (file_exists($viewFile)) {
                 require_once $viewFile;
             } else {
-                // Если view не существует, показываем home
-                require_once __DIR__ . '/views/home.php';
+                // Если view не существует, показываем project home
+                require_once __DIR__ . '/views/project_home.php';
             }
         ?>
         
