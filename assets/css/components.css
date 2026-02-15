@@ -391,7 +391,8 @@ form {
     justify-content: flex-end;
     align-items: flex-start;
     padding-top: 52px;
-    pointer-events: none;
+    pointer-events: all;
+    background: rgba(0, 0, 0, 0.05);
 }
 
 .reminder-modal[style*="display: none"] {

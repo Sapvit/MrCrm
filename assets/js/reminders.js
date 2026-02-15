@@ -185,6 +185,25 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
     
+    // Закрытие по клику вне модального окна
+    if (modal) {
+        modal.addEventListener('click', (e) => {
+            // Закрываем только если кликнули именно на фон, а не на содержимое
+            if (e.target === modal) {
+                if (hasFormChanges()) {
+                    const result = confirm('You have unsaved changes. Do you want to save them?');
+                    if (result) {
+                        saveReminder();
+                    } else {
+                        closeModal();
+                    }
+                } else {
+                    closeModal();
+                }
+            }
+        });
+    }
+    
     // Чекбокс "All day"
     const allDayCheckbox = document.querySelector('#reminder_all_day');
     if (allDayCheckbox) {
