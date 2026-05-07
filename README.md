@@ -142,9 +142,6 @@ Edit `config.php` to:
 
 Feel free to fork, modify, and improve this project!
 
-## 📄 License
-
-[Add your license here if applicable]
 
 ---
 
